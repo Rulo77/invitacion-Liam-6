@@ -86,7 +86,7 @@
 
     @media (min-width: 768px) {
       .letters {
-        --s: 0.6;
+        --s: 0.48;
       }
     }
 
@@ -169,8 +169,9 @@
   <div class="relative group cursor-pointer" onclick="pokePikachu()">
     <div
       class="w-20 h-20 md:w-24 md:h-24 bg-pika-yellow rounded-2xl border-4 border-black shadow-comic flex items-center justify-center overflow-hidden transition-transform transform group-hover:scale-110 group-active:scale-95 relative">
-      <div class="w-full h-full overflow-hidden relative">
-        <div class="pikachu pikachu-regalo"></div>
+      <div class="w-full h-full overflow-hidden relative flex items-center justify-center">
+        <!-- sprite 160x180 escalado para caber completo en la caja (72px / 88px útiles) -->
+        <div class="pikachu pikachu-regalo shrink-0 scale-[0.38] md:scale-[0.47]"></div>
       </div>
     </div>
     <span
@@ -262,24 +263,12 @@
   </header>
   <!-- POKÉDEX SCREEN: only this area scrolls, header and footer stay fixed -->
   <div
-    class="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth snap-y snap-proximity [&>section]:snap-start"
+    class="flex-1 min-h-0 overflow-y-auto overscroll-contain scroll-smooth snap-y snap-mandatory [&>section]:snap-start [&>section]:snap-always"
     id="pokedex-screen">
   <!-- SECTION 1 (LIGHT): POKÉDEX MAIN LCD SCREEN (HERO & CUMPLEAÑERO DATA) -->
-  <section class="p-4 md:p-8 bg-white border-b-4 border-black relative border-l-2 border-r-2 border-red-600"
-    id="datos-pokedex">
-    <div class="bg-white border-4 border-black rounded-3xl p-4 md:p-6 shadow-comic relative overflow-hidden">
-      <div class="flex items-center justify-between pb-3 mb-4 border-b-2 border-black/10 font-tech text-xs">
-        <div class="flex items-center gap-2">
-          <span class="w-3 h-3 rounded-full bg-red-500 border border-black"></span>
-          <span class="w-3 h-3 rounded-full bg-red-500 border border-black"></span>
-          <span class="font-bold text-neutral-600 uppercase ml-2">PANTALLA PRINCIPAL LCD // POKÉ-DISPLAY</span>
-        </div>
-        <div class="bg-neutral-100 border border-black px-2 py-0.5 rounded font-pixel text-[9px]">
-          BATCH ID: LIAM-06
-        </div>
-      </div>
-      <div class="bg-pokedex-lcd border-[3px] border-black rounded-2xl p-4 md:p-6 relative">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+  <section class="min-h-full flex flex-col bg-pokedex-lcd border-b-4 border-black relative" id="datos-pokedex">
+      <div class="flex-1 flex flex-col justify-start px-4 md:px-8 pt-2 pb-4 md:pt-3 md:pb-0 relative">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
           <span
             class="inline-flex items-center gap-1.5 bg-black text-white px-3 py-1 rounded-md font-pixel text-[10px] uppercase shadow-comic-sm">
             <span class="text-pika-yellow">⚡</span> ¡INVITACIÓN OFICIAL DE PIKACHU! <span
@@ -299,7 +288,7 @@
                 PIKACHU CUMPLEAÑERO
               </div>
               <div
-                class="w-full bg-white h-56 md:h-64 bg-neutral-900 border-2 border-black rounded-xl overflow-hidden relative flex items-center justify-center group">
+                class="w-full bg-white h-44 md:h-[244px] bg-neutral-900 border-2 border-black rounded-xl overflow-hidden relative flex items-center justify-center group">
                 <div
                   class="absolute inset-0 pointer-events-none z-10 border border-emerald-500/20 grid grid-cols-2 grid-rows-2">
                 </div>
@@ -309,7 +298,7 @@
                 </div>
                 <div class="pikachu pikachu-regalo"></div>
               </div>
-              <div class="mt-3 bg-neutral-100 border-2 border-black rounded-lg p-2 font-tech text-xs space-y-1">
+              <div class="mt-2 bg-neutral-100 border-2 border-black rounded-lg px-2 py-1.5 font-tech text-xs space-y-0.5">
                 <div class="flex justify-between font-bold">
                   <span class="text-neutral-500">NO. ENTRADA:</span>
                   <span class="">#025 - LIAM</span>
@@ -325,7 +314,7 @@
               </div>
             </div>
           </div>
-          <div class="lg:col-span-7 space-y-4">
+          <div class="lg:col-span-7 space-y-2.5">
             <div>
               <p class="font-pixel text-[11px] text-neutral-600 uppercase tracking-wider mb-1">
                 &gt; OBJETIVO A CELEBRAR:
@@ -336,35 +325,35 @@
                 <div class="letters letters-A"></div>
                 <div class="letters letters-M"></div>
               </div>
-              <div class="mt-2">
+              <div class="mt-1">
                 <span
                   class="inline-block bg-pika-yellow border-[3px] border-black px-4 py-1.5 rounded-xl shadow-comic text-xl md:text-2xl font-black font-display uppercase -rotate-1">
                   ¡CUMPLE 6 AÑOS! 🎂⚡
                 </span>
               </div>
             </div>
-            <div class="bg-white border-[3px] border-black rounded-xl p-4 shadow-comic-sm space-y-2">
+            <div class="bg-white border-[3px] border-black rounded-xl px-3 py-2.5 shadow-comic-sm space-y-1.5">
               <div class="flex items-center gap-2 border-b border-black/10 pb-1.5">
                 <span class="font-pixel text-[9px] bg-black text-white px-2 py-0.5 rounded">DESCRIPCIÓN</span>
                 <span class="font-tech font-bold text-xs uppercase text-neutral-500">REPORTE DEL PROFESOR POKÉMON</span>
               </div>
-              <p class="font-sans font-bold text-neutral-800 text-sm md:text-base leading-relaxed">
+              <p class="font-sans font-bold text-neutral-800 text-xs md:text-sm leading-snug">
                 Prepárate para una tarde llena de aventuras, pokébolas, pastel y sorpresas eléctricas con Pikachu y
                 amigos. ¡Todos los entrenadores están convocados!
               </p>
-              <div class="flex flex-wrap gap-2 pt-1 font-tech font-bold text-xs">
-                <span class="bg-neutral-100 border border-black px-2.5 py-1 rounded">🎈 Retos y Juegos</span>
-                <span class="bg-neutral-100 border border-black px-2.5 py-1 rounded">🍰 Tarta Legendaria</span>
-                <span class="bg-neutral-100 border border-black px-2.5 py-1 rounded">🎁 Piñata Sorpresa</span>
+              <div class="flex flex-wrap gap-1.5 font-tech font-bold text-[11px]">
+                <span class="bg-neutral-100 border border-black px-2 py-0.5 rounded">🎈 Retos y Juegos</span>
+                <span class="bg-neutral-100 border border-black px-2 py-0.5 rounded">🍰 Tarta Legendaria</span>
+                <span class="bg-neutral-100 border border-black px-2 py-0.5 rounded">🎁 Piñata Sorpresa</span>
               </div>
             </div>
-            <div class="flex flex-wrap items-center gap-3 pt-2">
-              <a class="bg-black text-white hover:bg-neutral-800 border-[3px] border-black px-6 py-3 rounded-xl font-black font-tech uppercase text-sm shadow-comic hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex items-center gap-2"
+            <div class="flex flex-wrap items-center gap-3">
+              <a class="bg-black text-white hover:bg-neutral-800 border-[3px] border-black px-5 py-2 rounded-xl font-black font-tech uppercase text-sm shadow-comic hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex items-center gap-2"
                 href="#asistencia">
                 <span class="">CONFIRMAR ASISTENCIA</span>
                 <span class="text-pika-yellow">➔</span>
               </a>
-              <a class="bg-white text-black hover:bg-neutral-50 border-[3px] border-black px-6 py-3 rounded-xl font-black font-tech uppercase text-sm shadow-comic hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
+              <a class="bg-white text-black hover:bg-neutral-50 border-[3px] border-black px-5 py-2 rounded-xl font-black font-tech uppercase text-sm shadow-comic hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all"
                 href="#detalles">
                 VER FECHA &amp; LUGAR
               </a>
@@ -372,36 +361,13 @@
           </div>
         </div>
       </div>
-      <div class="mt-6 pt-4 border-t-[3px] border-black flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-4">
-          <div
-            class="relative w-20 h-20 bg-neutral-200 border-2 border-black rounded-lg p-1 flex items-center justify-center shadow-comic-sm">
-            <div class="absolute w-16 h-6 bg-black rounded"></div>
-            <div class="absolute w-6 h-16 bg-black rounded"></div>
-            <div class="w-4 h-4 rounded-full bg-neutral-800 z-10"></div>
-          </div>
-          <div class="space-y-1">
-            <span class="font-pixel text-[9px] text-neutral-500 uppercase block">NAVEGADOR DE POKÉDEX</span>
-            <p class="font-tech font-bold text-xs text-neutral-700">Explora abajo los datos del evento de Liam.</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-4">
-          <div class="flex items-center gap-2">
-            <div class="w-10 h-3 bg-neutral-800 rounded-full -rotate-12 border border-black shadow-comic-sm"></div>
-            <div class="w-10 h-3 bg-neutral-800 rounded-full -rotate-12 border border-black shadow-comic-sm"></div>
-          </div>
-          <div class="w-8 h-8 rounded-full bg-red-500 border-2 border-black shadow-comic-sm"></div>
-          <div class="w-8 h-8 rounded-full bg-neutral-800 border-2 border-black shadow-comic-sm"></div>
-        </div>
-      </div>
-    </div>
   </section>
   <!-- SECTION 3 (LIGHT): DATOS DE LA FIESTA (CUÁNDO Y HORARIOS) -->
   <section
-    class="p-4 md:p-8 bg-neutral-950 text-white border-b-4 border-black relative border-l-2 border-r-2 border-red-600"
+    class="min-h-full flex flex-col justify-center p-4 md:p-8 bg-neutral-950 text-white border-b-4 border-black relative border-l-2 border-r-2 border-red-600"
     id="detalles">
-    <div class="max-w-4xl mx-auto">
-      <div class="text-center mb-8">
+    <div class="w-full max-w-4xl mx-auto">
+      <div class="text-center mb-6">
         <span
           class="bg-pika-yellow text-black border-2 border-black px-3.5 py-1 rounded-full text-xs font-black font-tech uppercase tracking-widest shadow-comic-sm">
           REGISTRO DE TIEMPO POKÉDEX
@@ -461,15 +427,15 @@
   </section>
   <!-- SECTION 4 (DARK): LOCALIZACIÓN & MAPA (GIMNASIO POKÉMON) -->
   <section
-    class="p-4 md:p-8 bg-white text-neutral-900 border-b-4 border-black relative border-l-2 border-r-2 border-red-600"
+    class="min-h-full flex flex-col justify-center p-4 md:px-8 md:py-5 bg-white text-neutral-900 border-b-4 border-black relative border-l-2 border-r-2 border-red-600"
     id="ubicacion">
-    <div class="max-w-4xl mx-auto">
-      <div class="text-center mb-8">
+    <div class="w-full max-w-4xl mx-auto">
+      <div class="text-center mb-4">
         <span
           class="bg-pika-yellow text-black border-2 border-black px-3.5 py-1 rounded-full text-xs font-black font-tech uppercase tracking-widest shadow-comic-sm">
           GIMNASIO POKÉMON DESIGNADO
         </span>
-        <h2 class="text-2xl md:text-3xl font-black font-display uppercase mt-2 tracking-wide text-neutral-950">
+        <h2 class="text-2xl font-black font-display uppercase mt-2 tracking-wide text-neutral-950">
           ¿Dónde es la Celebración?
         </h2>
         <p class="text-neutral-600 font-bold text-xs md:text-sm mt-1">Sigue el radar para llegar directamente a la
@@ -477,18 +443,18 @@
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         <div
-          class="lg:col-span-5 flex flex-col justify-between bg-white border-[3px] border-black rounded-2xl p-5 shadow-comic">
+          class="lg:col-span-6 flex flex-col justify-between bg-white border-[3px] border-black rounded-2xl p-4 shadow-comic">
           <div>
             <div
-              class="inline-flex items-center gap-1.5 bg-pika-yellow text-black border-2 border-black px-2.5 py-1 rounded-md text-[11px] font-black font-tech uppercase mb-3 shadow-comic-sm">
+              class="inline-flex items-center gap-1.5 bg-pika-yellow text-black border-2 border-black px-2.5 py-1 rounded-md text-[11px] font-black font-tech uppercase mb-2 shadow-comic-sm">
               📍 Salón "PokéPark"
             </div>
-            <h3 class="text-xl font-black font-display uppercase text-black">Club Recreativo Los Álamos</h3>
-            <p class="text-neutral-700 font-bold mt-1 text-sm">
+            <h3 class="text-lg font-black font-display uppercase text-black leading-tight">Club Recreativo Los Álamos</h3>
+            <p class="text-neutral-700 font-bold mt-0.5 text-sm">
               Av. De las Palmeras #742, Esquina Pikachu Boulevard
             </p>
-            <p class="text-neutral-900 font-bold text-xs mt-1 font-tech">Zona Recreativa Infantil - Sala #3</p>
-            <div class="my-4 border-t-2 border-dashed border-black/20 pt-4 space-y-2 text-xs font-bold">
+            <p class="text-neutral-900 font-bold text-xs mt-0.5 font-tech">Zona Recreativa Infantil - Sala #3</p>
+            <div class="my-3 border-t-2 border-dashed border-black/20 pt-3 space-y-1 text-xs font-bold">
               <div class="flex items-start gap-2">
                 <span class="">🚗</span>
                 <p class="text-neutral-700"><strong class="text-black">Estacionamiento:</strong> Vigilado y gratuito
@@ -501,13 +467,13 @@
               </div>
             </div>
           </div>
-          <div class="pt-2 flex flex-col sm:flex-row gap-2">
-            <a class="flex-1 text-center bg-pika-yellow text-black border-2 border-black py-2.5 px-3 rounded-xl font-black font-tech uppercase text-xs shadow-comic-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-1.5"
+          <div class="flex flex-col sm:flex-row gap-2">
+            <a class="flex-1 text-center bg-pika-yellow text-black border-2 border-black py-2 px-3 rounded-xl font-black font-tech uppercase text-xs shadow-comic-sm hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-none transition-all flex items-center justify-center gap-1.5"
               href="https://maps.google.com" rel="noopener" target="_blank">
               <span class="">Google Maps</span>
               <span class="">↗</span>
             </a>
-            <a class="flex-1 text-center bg-black text-white border-2 border-black py-2.5 px-3 rounded-xl font-black font-tech uppercase text-xs shadow-comic-sm hover:bg-neutral-800 transition-all flex items-center justify-center gap-1.5"
+            <a class="flex-1 text-center bg-black text-white border-2 border-black py-2 px-3 rounded-xl font-black font-tech uppercase text-xs shadow-comic-sm hover:bg-neutral-800 transition-all flex items-center justify-center gap-1.5"
               href="https://waze.com" rel="noopener" target="_blank">
               <span class="">Waze</span>
               <span class="">↗</span>
@@ -515,8 +481,8 @@
           </div>
         </div>
         <div
-          class="lg:col-span-7 bg-neutral-900 border-[3px] border-black rounded-2xl p-5 shadow-comic flex flex-col justify-between overflow-hidden bg-dots-pattern-dark text-white">
-          <div class="flex items-center justify-between z-10 mb-3">
+          class="lg:col-span-6 bg-neutral-900 border-[3px] border-black rounded-2xl p-4 shadow-comic flex flex-col justify-between overflow-hidden bg-dots-pattern-dark text-white">
+          <div class="flex items-center justify-between z-10 mb-2">
             <span
               class="bg-pika-yellow text-black border-2 border-black px-2.5 py-0.5 rounded text-xs font-black font-tech uppercase shadow-comic-sm">
               RADAR POKÉDEX
@@ -527,7 +493,7 @@
             </span>
           </div>
           <div
-            class="my-2 relative w-full h-44 bg-neutral-950 border-2 border-neutral-700 rounded-xl overflow-hidden flex items-center justify-center">
+            class="mb-2 relative w-full flex-1 min-h-[8rem] bg-neutral-950 border-2 border-neutral-700 rounded-xl overflow-hidden flex items-center justify-center">
             <div class="absolute inset-0 opacity-30">
               <div class="w-full h-4 bg-emerald-600 top-8 absolute -rotate-6"></div>
               <div class="w-full h-5 bg-emerald-600 bottom-8 absolute rotate-3"></div>
@@ -560,9 +526,9 @@
   </section>
   <!-- SECTION 5 (LIGHT): ACTIVIDADES Y DIVERSIÓN -->
   <section
-    class="p-4 md:p-8 bg-neutral-950 text-white border-b-4 border-black relative border-l-2 border-r-2 border-red-600"
+    class="min-h-full flex flex-col justify-center p-4 md:p-8 bg-neutral-950 text-white border-b-4 border-black relative border-l-2 border-r-2 border-red-600"
     id="actividades">
-    <div class="max-w-4xl mx-auto">
+    <div class="w-full max-w-4xl mx-auto">
       <div class="text-center mb-8">
         <span
           class="bg-pika-yellow text-black border-2 border-black px-3.5 py-1 rounded-full text-xs font-black font-tech uppercase tracking-widest shadow-comic-sm">
@@ -611,14 +577,14 @@
     </div>
   </section>
   <!-- SECTION 6 (DARK): CONFIRMACIÓN RSVP CON PIKACHU RECIBIENDO REGALO -->
-  <section class="p-4 md:p-8 bg-white text-neutral-900 relative border-l-2 border-r-2 border-red-600" id="asistencia">
-    <div class="max-w-4xl mx-auto">
-      <div class="bg-white border-4 border-black rounded-3xl p-5 md:p-8 shadow-comic-lg relative">
+  <section class="min-h-full flex flex-col justify-center p-4 md:px-8 md:pt-7 md:pb-4 bg-white text-neutral-900 relative border-l-2 border-r-2 border-red-600" id="asistencia">
+    <div class="w-full max-w-4xl mx-auto">
+      <div class="bg-white border-4 border-black rounded-3xl p-5 md:px-6 md:pt-5 md:pb-4 shadow-comic-lg relative">
         <div
           class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-pika-yellow text-black border-[3px] border-black px-5 py-1 rounded-xl shadow-comic text-xs font-black font-tech uppercase tracking-wider">
           ⚡ CONFIRMACIÓN DE ENTRENADORES (RSVP) ⚡
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-4">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center mt-2">
           <div class="lg:col-span-5 flex flex-col items-center">
             <div
               class="w-full max-w-[260px] bg-white text-black border-[3px] border-black rounded-2xl p-3 shadow-comic relative text-center">
@@ -627,7 +593,7 @@
                 PIKACHU REGALO / INVITADO
               </div>
               <div
-                class="w-full h-52 bg-yellow-100/60 border-2 border-black rounded-xl overflow-hidden relative flex items-center justify-center">
+                class="w-full h-44 bg-yellow-100/60 border-2 border-black rounded-xl overflow-hidden relative flex items-center justify-center">
                 <div class="absolute inset-0 bg-dots-pattern opacity-30"></div>
               </div>
               <div class="mt-2.5 bg-yellow-50 border border-black rounded-lg p-2 font-tech text-xs">
@@ -638,55 +604,55 @@
             </div>
           </div>
           <div class="lg:col-span-7">
-            <div class="mb-4">
-              <h3 class="text-2xl font-black font-display uppercase tracking-tight text-black">
+            <div class="mb-2">
+              <h3 class="text-xl font-black font-display uppercase tracking-tight text-black">
                 ¿Nos acompañas al cumpleaños de Liam?
               </h3>
-              <p class="text-neutral-600 font-bold text-xs mt-1">
+              <p class="text-neutral-600 font-bold text-xs mt-0.5">
                 Por favor confirma tu asistencia para reservar tu kit de entrenador y bocadillos.
               </p>
             </div>
-            <form class="space-y-3.5" id="rsvp-form" onsubmit="handleRSVP(event)">
+            <form class="space-y-2" id="rsvp-form" onsubmit="handleRSVP(event)">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
-                  <label class="block text-[11px] font-black font-tech uppercase tracking-wider text-neutral-900 mb-1"
+                  <label class="block text-[11px] font-black font-tech uppercase tracking-wider text-neutral-900 mb-0.5"
                     for="parent-name">
                     Nombre Adulto / Papá / Mamá
                   </label>
                   <input
-                    class="w-full bg-neutral-100 border-2 border-black rounded-xl px-3 py-2 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-pika-yellow"
+                    class="w-full bg-neutral-100 border-2 border-black rounded-xl px-3 py-1.5 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-pika-yellow"
                     id="parent-name" placeholder="Ej. Carlos Martínez" required="" type="text">
                 </div>
                 <div>
-                  <label class="block text-[11px] font-black font-tech uppercase tracking-wider text-neutral-900 mb-1"
+                  <label class="block text-[11px] font-black font-tech uppercase tracking-wider text-neutral-900 mb-0.5"
                     for="child-name">
                     Nombre del Niño(a)
                   </label>
                   <input
-                    class="w-full bg-neutral-100 border-2 border-black rounded-xl px-3 py-2 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-pika-yellow"
+                    class="w-full bg-neutral-100 border-2 border-black rounded-xl px-3 py-1.5 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-pika-yellow"
                     id="child-name" placeholder="Ej. Mateo (6 años)" required="" type="text">
                 </div>
               </div>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
-                  <label class="block text-[11px] font-black font-tech uppercase tracking-wider text-neutral-900 mb-1"
+                  <label class="block text-[11px] font-black font-tech uppercase tracking-wider text-neutral-900 mb-0.5"
                     for="attendance-select">
                     ¿Asistirá a la fiesta?
                   </label>
                   <select
-                    class="w-full bg-neutral-100 border-2 border-black rounded-xl px-3 py-2 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-pika-yellow"
+                    class="w-full bg-neutral-100 border-2 border-black rounded-xl px-3 py-1.5 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-pika-yellow"
                     id="attendance-select">
                     <option class="bg-white text-black" value="si">¡Sí, ahí estaremos listos! ⚡</option>
                     <option class="bg-white text-black" value="no">Lamentablemente no podremos 😢</option>
                   </select>
                 </div>
                 <div>
-                  <label class="block text-[11px] font-black font-tech uppercase tracking-wider text-neutral-900 mb-1"
+                  <label class="block text-[11px] font-black font-tech uppercase tracking-wider text-neutral-900 mb-0.5"
                     for="guests-count">
                     Número de Niños
                   </label>
                   <select
-                    class="w-full bg-neutral-100 border-2 border-black rounded-xl px-3 py-2 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-pika-yellow"
+                    class="w-full bg-neutral-100 border-2 border-black rounded-xl px-3 py-1.5 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-pika-yellow"
                     id="guests-count">
                     <option class="bg-white text-black" value="1">1 Niño(a)</option>
                     <option class="bg-white text-black" value="2">2 Niños</option>
@@ -695,16 +661,16 @@
                 </div>
               </div>
               <div>
-                <label class="block text-[11px] font-black font-tech uppercase tracking-wider text-neutral-900 mb-1"
+                <label class="block text-[11px] font-black font-tech uppercase tracking-wider text-neutral-900 mb-0.5"
                   for="message-input">
                   Mensaje para Liam (Opcional)
                 </label>
                 <textarea
-                  class="w-full bg-neutral-100 border-2 border-black rounded-xl px-3 py-2 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-pika-yellow resize-none"
-                  id="message-input" placeholder="¡Feliz nivel 6 Liam! Te deseamos un día súper..." rows="2"></textarea>
+                  class="w-full bg-neutral-100 border-2 border-black rounded-xl px-3 py-1.5 text-xs font-bold text-black focus:outline-none focus:ring-2 focus:ring-pika-yellow resize-none"
+                  id="message-input" placeholder="¡Feliz nivel 6 Liam! Te deseamos un día súper..." rows="1"></textarea>
               </div>
               <button
-                class="w-full bg-pika-yellow hover:bg-yellow-400 text-black border-[3px] border-black py-3 rounded-xl font-black font-tech uppercase tracking-wider text-sm shadow-comic hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex items-center justify-center gap-2"
+                class="w-full bg-pika-yellow hover:bg-yellow-400 text-black border-[3px] border-black py-2 rounded-xl font-black font-tech uppercase tracking-wider text-sm shadow-comic hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex items-center justify-center gap-2"
                 type="submit">
                 <span class="">¡REGISTRAR EN POKÉDEX Y CONFIRMAR!</span>
                 <span class="">⚡</span>
@@ -717,7 +683,7 @@
               <p class="text-xs font-bold text-neutral-900">¡Liam y Pikachu te esperan para celebrar a lo grande!</p>
             </div>
             <div
-              class="mt-4 pt-4 border-t-2 border-dashed border-black/20 flex flex-wrap items-center justify-between gap-2">
+              class="mt-3 pt-2.5 border-t-2 border-dashed border-black/20 flex flex-wrap items-center justify-between gap-2">
               <span class="text-xs font-bold text-neutral-600">¿Prefieres confirmar vía chat?</span>
               <a class="inline-flex items-center gap-1.5 bg-black text-white hover:bg-neutral-800 border-2 border-black px-3 py-1.5 rounded-lg text-xs font-black font-tech uppercase shadow-comic-sm transition-all"
                 href="https://wa.me/?text=Hola!%20Confirmo%20mi%20asistencia%20al%20cumpleaños%20de%20Liam%20(6%20años)%20con%20mucho%20gusto!"
@@ -777,6 +743,92 @@
         bubbleText.textContent = "¡Confirma tu RSVP! ⚡";
       }
     }
+  });
+
+  // Section paging: one wheel/trackpad gesture moves exactly one section with an eased animation.
+  // Touch and keyboard rely on the CSS scroll-snap of #pokedex-screen.
+  const sections = [...pokedexScreen.querySelectorAll(':scope > section')];
+  const PAGE_DURATION = 700;
+  const WHEEL_QUIET_MS = 180; // trackpad inertia keeps firing wheel events after the gesture
+  let isPaging = false;
+  let lastWheel = 0;
+
+  const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  function currentSectionIndex() {
+    const top = pokedexScreen.getBoundingClientRect().top;
+    let best = 0;
+    let bestDist = Infinity;
+    sections.forEach((section, i) => {
+      const dist = Math.abs(section.getBoundingClientRect().top - top);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = i;
+      }
+    });
+    return best;
+  }
+
+  function scrollToSection(index) {
+    const target = sections[Math.max(0, Math.min(index, sections.length - 1))];
+    const start = pokedexScreen.scrollTop;
+    const distance = target.getBoundingClientRect().top - pokedexScreen.getBoundingClientRect().top;
+    if (Math.abs(distance) < 1) return;
+
+    isPaging = true;
+    // Snap and smooth-behavior would fight the frame-by-frame animation
+    pokedexScreen.style.scrollSnapType = 'none';
+    pokedexScreen.style.scrollBehavior = 'auto';
+    const t0 = performance.now();
+
+    function step(now) {
+      const t = Math.min((now - t0) / PAGE_DURATION, 1);
+      pokedexScreen.scrollTop = start + distance * easeInOutCubic(t);
+      if (t < 1) {
+        requestAnimationFrame(step);
+        return;
+      }
+      pokedexScreen.style.scrollSnapType = '';
+      pokedexScreen.style.scrollBehavior = '';
+      const release = () => {
+        if (performance.now() - lastWheel > WHEEL_QUIET_MS) isPaging = false;
+        else setTimeout(release, 50);
+      };
+      release();
+    }
+    requestAnimationFrame(step);
+  }
+
+  pokedexScreen.addEventListener('wheel', (e) => {
+    if (e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return; // pinch-zoom or horizontal scroll
+    lastWheel = performance.now();
+    if (isPaging) {
+      e.preventDefault();
+      return;
+    }
+    const dir = Math.sign(e.deltaY);
+    if (!dir) return;
+
+    // A section taller than the screen scrolls natively until its edge is reached
+    const screenRect = pokedexScreen.getBoundingClientRect();
+    const index = currentSectionIndex();
+    const rect = sections[index].getBoundingClientRect();
+    if (dir > 0 && rect.bottom > screenRect.bottom + 2) return;
+    if (dir < 0 && rect.top < screenRect.top - 2) return;
+
+    e.preventDefault();
+    const next = index + dir;
+    if (next >= 0 && next < sections.length) scrollToSection(next);
+  }, { passive: false });
+
+  // Header/footer links use the same animation as the wheel
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const index = sections.findIndex((section) => '#' + section.id === link.getAttribute('href'));
+      if (index < 0) return;
+      e.preventDefault();
+      scrollToSection(index);
+    });
   });
 
   // Interactive Easter Egg when tapping the floating mascot
