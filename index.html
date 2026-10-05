@@ -178,20 +178,20 @@
 
 <body
   class="bg-[#D1D5DB] text-neutral-900 font-sans selection:bg-pika-yellow selection:text-black h-dvh overflow-hidden flex flex-col p-0 md:py-6 md:px-4">
-<!-- FLOATING POKÉDEX HELPER MASCOT -->
-<aside class="fixed bottom-24 md:bottom-28 right-4 md:right-8 z-40 flex flex-col items-end pointer-events-auto" id="mascot-container">
+<!-- FLOATING POKÉDEX HELPER MASCOT (en celular se puede arrastrar) -->
+<aside class="fixed bottom-24 md:bottom-28 right-4 md:right-8 z-40 flex flex-col items-end pointer-events-none" id="mascot-container">
   <div
-    class="bg-white border-[3px] border-black px-3 py-1.5 rounded-2xl shadow-comic text-xs font-black font-display uppercase tracking-wide mb-2 flex items-center gap-1.5 bg-yellow-50"
+    class="bg-white border-[3px] border-black px-3 py-1.5 rounded-2xl shadow-comic text-xs font-black font-display uppercase tracking-wide mb-2 flex items-center gap-1.5 bg-yellow-50 origin-bottom-right transition-all duration-300 opacity-0 scale-75 translate-y-2"
     id="pikachu-bubble">
     <span class="inline-block w-2.5 h-2.5 rounded-full bg-red-500 border border-black animate-ping"></span>
-    <span id="mascot-text" class="">¡Confirma tu RSVP! ⚡</span>
+    <span id="mascot-text" class="">¡Liam nivel 6! 🎂</span>
   </div>
-  <div class="relative group cursor-pointer" onclick="pokePikachu()">
+  <div class="relative group cursor-pointer pointer-events-auto touch-none md:touch-auto select-none" id="mascot-handle" onclick="pokePikachu()">
     <div
-      class="w-20 h-20 md:w-24 md:h-24 bg-pika-yellow rounded-2xl border-4 border-black shadow-comic flex items-center justify-center overflow-hidden transition-transform transform group-hover:scale-110 group-active:scale-95 relative">
+      class="w-16 h-16 md:w-24 md:h-24 bg-pika-yellow rounded-2xl border-4 border-black shadow-comic flex items-center justify-center overflow-hidden transition-transform transform group-hover:scale-110 group-active:scale-95 relative">
       <div class="w-full h-full overflow-hidden relative flex items-center justify-center">
-        <!-- sprite 160x180 escalado para caber completo en la caja (72px / 88px útiles) -->
-        <div class="pikachu pikachu-regalo shrink-0 scale-[0.38] md:scale-[0.47]"></div>
+        <!-- sprite 160x180 escalado para caber completo en la caja (56px / 88px útiles) -->
+        <div class="pikachu pikachu-regalo shrink-0 scale-[0.3] md:scale-[0.47]"></div>
       </div>
     </div>
     <span
@@ -730,27 +730,7 @@
 </main>
 <!-- POKÉDEX INTERACTION SCRIPTS -->
 <script>
-  // Scroll tracking for mascot dialogs
   const pokedexScreen = document.getElementById('pokedex-screen');
-  pokedexScreen.addEventListener('scroll', () => {
-    const scrollY = pokedexScreen.scrollTop;
-    const docHeight = pokedexScreen.scrollHeight - pokedexScreen.clientHeight;
-    const scrollFraction = Math.min(Math.max(scrollY / (docHeight || 1), 0), 1);
-
-    // Update Mascot dialogue bubble
-    const bubbleText = document.getElementById('mascot-text');
-    if (bubbleText) {
-      if (scrollFraction < 0.25) {
-        bubbleText.textContent = "¡Liam nivel 6! 🎂";
-      } else if (scrollFraction < 0.55) {
-        bubbleText.textContent = "¡Guarda la fecha! ⏰";
-      } else if (scrollFraction < 0.8) {
-        bubbleText.textContent = "¡Radar del PokéPark! 📍";
-      } else {
-        bubbleText.textContent = "¡Confirma tu RSVP! ⚡";
-      }
-    }
-  });
 
   // Section paging: one wheel/trackpad gesture moves exactly one section with an eased animation.
   // Touch and keyboard rely on the CSS scroll-snap of #pokedex-screen.
@@ -838,8 +818,48 @@
     });
   });
 
+  // ===== Floating mascot: speech bubble =====
+  // The bubble shows for 4 s and only reappears when a new section is reached (or Pikachu is tapped).
+  const mascot = document.getElementById('mascot-container');
+  const mascotHandle = document.getElementById('mascot-handle');
+  const bubble = document.getElementById('pikachu-bubble');
+  const bubbleText = document.getElementById('mascot-text');
+  const BUBBLE_MS = 3000;
+  const BUBBLE_HIDDEN = ['opacity-0', 'scale-75', 'translate-y-2'];
+  const sectionPhrases = {
+    'datos-pokedex': '¡Liam nivel 6! 🎂',
+    'detalles': '¡Guarda la fecha! ⏰',
+    'ubicacion': '¡Radar activado! 📍',
+    'actividades': '¡Habrá muchos retos! 🎁',
+    'asistencia': '¡Confirma tu RSVP! ⚡'
+  };
+  let bubbleTimer = 0;
+  let lastSection = -1;
+
+  function showBubble(text) {
+    bubbleText.textContent = text;
+    bubble.classList.remove(...BUBBLE_HIDDEN);
+    clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(() => bubble.classList.add(...BUBBLE_HIDDEN), BUBBLE_MS);
+  }
+
+  function checkSectionBubble() {
+    const index = currentSectionIndex();
+    if (index === lastSection) return;
+    lastSection = index;
+    showBubble(sectionPhrases[sections[index].id] || '¡Pika-Pikachuuu! ⚡');
+  }
+
+  let sectionCheckTimer = 0;
+  pokedexScreen.addEventListener('scroll', () => {
+    clearTimeout(sectionCheckTimer);
+    sectionCheckTimer = setTimeout(checkSectionBubble, 150); // wait until the scroll settles
+  });
+  window.addEventListener('load', checkSectionBubble);
+
   // Interactive Easter Egg when tapping the floating mascot
   let pokeCount = 0;
+  let suppressClick = false;
   const pokedexPhrases = [
     "¡Pika-Pikachuuu! ⚡",
     "¡Pokédex de Liam activada!",
@@ -849,19 +869,103 @@
   ];
 
   function pokePikachu() {
+    if (suppressClick) {
+      suppressClick = false;
+      return;
+    }
     pokeCount++;
-    const bubbleText = document.getElementById('mascot-text');
-    const bubble = document.getElementById('pikachu-bubble');
-
-    const phrase = pokedexPhrases[pokeCount % pokedexPhrases.length];
-    if (bubbleText) {
-      bubbleText.textContent = phrase;
-    }
-    if (bubble) {
-      bubble.classList.add('scale-110');
-      setTimeout(() => bubble.classList.remove('scale-110'), 300);
-    }
+    showBubble(pokedexPhrases[pokeCount % pokedexPhrases.length]);
   }
+
+  // ===== Floating mascot: drag on mobile =====
+  const mobileQuery = window.matchMedia('(max-width: 767px)');
+  const EDGE = 12;
+  const DRAG_THRESHOLD = 6;
+  let drag = null;
+
+  // The bubble opens towards the center of the screen
+  function alignBubble(side) {
+    const left = side === 'left';
+    mascot.classList.toggle('items-start', left);
+    mascot.classList.toggle('items-end', !left);
+    bubble.classList.toggle('origin-bottom-left', left);
+    bubble.classList.toggle('origin-bottom-right', !left);
+  }
+
+  function placeMascot(x, y) {
+    const rect = mascot.getBoundingClientRect();
+    const maxX = window.innerWidth - rect.width - EDGE;
+    const maxY = window.innerHeight - rect.height - EDGE;
+    mascot.style.left = Math.min(Math.max(x, EDGE), Math.max(maxX, EDGE)) + 'px';
+    mascot.style.top = Math.min(Math.max(y, EDGE), Math.max(maxY, EDGE)) + 'px';
+    mascot.style.right = 'auto';
+    mascot.style.bottom = 'auto';
+  }
+
+  // Snap to the nearest side so Pikachu never rests in the middle of the content
+  function snapMascot() {
+    const rect = mascot.getBoundingClientRect();
+    const side = rect.left + rect.width / 2 < window.innerWidth / 2 ? 'left' : 'right';
+    alignBubble(side);
+    const width = mascot.getBoundingClientRect().width;
+    mascot.style.transition = 'left 200ms ease-out, top 200ms ease-out';
+    placeMascot(side === 'left' ? EDGE : window.innerWidth - width - EDGE, rect.top);
+    setTimeout(() => { mascot.style.transition = ''; }, 220);
+    try {
+      localStorage.setItem('mascotPos', JSON.stringify({ side, y: rect.top / window.innerHeight }));
+    } catch (e) { /* storage blocked: the position is just not remembered */ }
+  }
+
+  function resetMascot() {
+    mascot.style.left = mascot.style.top = mascot.style.right = mascot.style.bottom = '';
+    alignBubble('right');
+  }
+
+  function restoreMascot() {
+    let saved = null;
+    try {
+      saved = JSON.parse(localStorage.getItem('mascotPos'));
+    } catch (e) { /* ignore */ }
+    if (!mobileQuery.matches || !saved) {
+      resetMascot();
+      return;
+    }
+    alignBubble(saved.side);
+    const width = mascot.getBoundingClientRect().width;
+    placeMascot(saved.side === 'left' ? EDGE : window.innerWidth - width - EDGE, saved.y * window.innerHeight);
+  }
+
+  mascotHandle.addEventListener('pointerdown', (e) => {
+    if (!mobileQuery.matches) return;
+    const rect = mascot.getBoundingClientRect();
+    drag = { id: e.pointerId, startX: e.clientX, startY: e.clientY, offX: e.clientX - rect.left, offY: e.clientY - rect.top, moved: false };
+    mascotHandle.setPointerCapture(e.pointerId);
+  });
+
+  mascotHandle.addEventListener('pointermove', (e) => {
+    if (!drag || e.pointerId !== drag.id) return;
+    if (!drag.moved && Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY) < DRAG_THRESHOLD) return;
+    drag.moved = true;
+    placeMascot(e.clientX - drag.offX, e.clientY - drag.offY);
+  });
+
+  function endDrag(e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    if (drag.moved) {
+      suppressClick = true; // the click fired after a drag must not count as a tap
+      setTimeout(() => { suppressClick = false; }, 300);
+      snapMascot();
+    }
+    drag = null;
+  }
+  mascotHandle.addEventListener('pointerup', endDrag);
+  mascotHandle.addEventListener('pointercancel', endDrag);
+
+  mobileQuery.addEventListener('change', restoreMascot);
+  window.addEventListener('resize', () => {
+    if (mobileQuery.matches && mascot.style.top) restoreMascot();
+  });
+  restoreMascot();
 
   // RSVP form handler
   function handleRSVP(event) {
