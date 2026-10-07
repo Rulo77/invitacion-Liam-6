@@ -90,6 +90,26 @@
       background-position: -40px -200px;
     }
 
+    /* Recorte de un Pikachu de la plantilla (1588x1588 px): --x, --y, --w, --h = recorte en la imagen original,
+       --s = escala de dibujo. */
+    .pika-sprite {
+      flex-shrink: 0;
+      width: calc(var(--w) * var(--s) * 1px);
+      height: calc(var(--h) * var(--s) * 1px);
+      background-image: url("./fondos pika pika.webp");
+      background-repeat: no-repeat;
+      background-size: calc(1588px * var(--s)) auto;
+      background-position: calc(var(--x) * var(--s) * -1px) calc(var(--y) * var(--s) * -1px);
+    }
+
+    .pika-dibujando {
+      --s: 0.58;
+      --x: 8;
+      --y: 4;
+      --w: 278;
+      --h: 272;
+    }
+
     /* Sprite de letras: --x, --y, --w, --h = recorte de la letra en la imagen original (1254x1254 px).
        --s = escala de dibujo; la caja mide exactamente lo que mide la letra escalada. */
     .letters {
@@ -503,9 +523,9 @@
             <p class="text-neutral-600 font-bold text-[11px] md:text-xs font-tech">C.P. 31107, Chihuahua, Chih.</p>
           </div>
           <ul class="space-y-0.5 md:space-y-1 text-[11px] md:text-xs font-bold text-neutral-700">
-            <li class="flex items-start gap-2"><span>🚗</span><span><strong class="text-black">Estacionamiento:</strong> vigilado y gratuito para invitados.</span></li>
-            <li class="flex items-start gap-2"><span>🚪</span><span><strong class="text-black">En recepción:</strong> menciona "Cumpleaños de Liam #6".</span></li>
-            <li class="flex items-start gap-2"><span>💡</span><span><strong class="text-black">Instalaciones:</strong> salón climatizado, jardín e inflables.</span></li>
+            <li class="flex items-start gap-2"><span>🚗</span><span><strong class="text-black">Estacionamiento:</strong> gratuito.</span></li>
+            <li class="flex items-start gap-2"><span>🪜</span><span><strong class="text-black">Ubicación:</strong> salón en segunda planta.</span></li>
+            <li class="flex items-start gap-2"><span>💡</span><span><strong class="text-black">Instalaciones:</strong> climatizado y con juegos para los niños.</span></li>
           </ul>
           <!-- Botones de navegación (escritorio): cada uno con el color e icono de su app -->
           <div class="hidden md:grid grid-cols-4 gap-2.5 mt-auto">
@@ -657,8 +677,7 @@
               <div
                 class="w-full h-44 bg-yellow-100/60 border-2 border-black rounded-xl overflow-hidden relative flex items-center justify-center">
                 <div class="absolute inset-0 bg-dots-pattern opacity-30"></div>
-                <img class="relative h-full w-auto object-contain p-2" src="./pikachu-dibujando.webp"
-                  alt="Pikachu anotando a los invitados" width="278" height="272">
+                <div class="relative pika-sprite pika-dibujando" role="img" aria-label="Pikachu anotando a los invitados"></div>
               </div>
               <div class="mt-2.5 bg-yellow-50 border border-black rounded-lg p-2 font-tech text-xs">
                 <p class="font-bold text-neutral-800 uppercase">¡Pikachu ya está anotando a los invitados!</p>
